@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Tutorial</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+        img {
+            width: 150px;  /* Larger logo size */
+            height: 150px; /* Larger logo size */
+        }
+    </style>
+</head>
+<body>
+    <!-- Make sure the file path is correct for your .jpg image -->
+    <img src="{{ url_for('static', filename='fb.png') }}" alt="Logo">
+    <h1>Welcome to the Flask template tutorial</h1>
+    <h2>Follow Me Along</h2>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Calculator</title>
+</head>
+<body>
+    <div class="calculate">
+        <h1>Calculate Average Marks</h1>
+
+        <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('calculate') }}" method="post">
+            <input type="text" name="maths" placeholder="Maths" required="required" />
+            <input type="text" name="science" placeholder="Science" required="required" />
+            <input type="text" name="history" placeholder="History" required="required" />
+
+            <button type="submit" class="btn btn-primary btn-block btn-large">Calculate</button>
+        </form>
+
+        <br>
+
+        <!-- Display the average score if available -->
+        {% if score is not none %}
+            <h2>The Average Marks is: {{ score }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
