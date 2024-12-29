@@ -1,23 +1,47 @@
 import json
 import os
+import hashlib
 
 class Database:
 
-    def insert(self, name, email, password):
+    def insert(self,name, email, password):
+        """Insert Register Credential"""
         if os.path.exists('users.json'):
-            with open ('users.json','r') as rf:
+            with open('users.json', 'r') as rf:
                 users = json.load(rf)
-                if email in users:
-                    return 0
-                else:
-                    users[email] = [name,password]
+
+            if email in users:
+                return False
+            else:
+                hashed_password = hashlib.sha256(password.encode()).hexdigest()
+                users[email] = [name, hashed_password]
+            
+            with open('users.json','w') as wf:
+                json.dump(users, wf, indent=4)
+                return True
         else:
             users = {}
-            users[email] = [name,password]
-            with open ('users.json', 'w') as wf:
-                json.dump(users,wf, indent=4)
-                return 1
-                
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            users[email] = [name, hashed_password] 
+            with open('users.json', 'w') as wf: 
+                json.dump(users, wf, indent=4)
+                return True
+            
+
+            
+    def authenticate(self,email, password): 
+        """Authenticate Login Credential"""
+        if os.path.exists('users.json'): 
+            with open('users.json', 'r') as rf: 
+                users = json.load(rf) 
+                if email in users: 
+                    stored_name, stored_hashed_password = users[email] 
+                    hashed_password = hashlib.sha256(password.encode()).hexdigest() 
+                    if hashed_password == stored_hashed_password: 
+                        return True 
+                    return False 
+                return False
+
         
 
 

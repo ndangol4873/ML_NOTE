@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,redirect, session
 from db_json import Database
 
 
@@ -41,10 +41,31 @@ def perform_registration():
         return render_template('login.html',message="Registration Successful. Kindly login to proceed")
     else:
         return render_template('register.html',message="Email already exists")
+    
 
-    user = f"{name} {email} {password}"
-    return user
 
+## Routing to register Page http://127.0.0.1:5000/perform_login
+@app.route('/perform_login', methods=['post'])
+def perform_login():
+    email = request.form.get('user_ka_email')
+    password = request.form.get('user_ka_password')
+    response = dbo.authenticate(email,password)
+    if response:
+        return redirect('/profile')
+    else:
+        return render_template ('login.html', message= "Incorrect Email / Password")
+    
+
+## Routing to register Page http://127.0.0.1:5000/profile
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+
+## Routing to register Page http://127.0.0.1:5000/ner
+@app.route('/ner')
+def ner():
+    return "Ner Hogaye"
 
 if __name__=="__main__":
     app.run(debug=True)
