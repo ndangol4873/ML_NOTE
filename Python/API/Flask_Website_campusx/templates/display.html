@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Question and Answer Viewer</title>
+</head>
+<body>
+    {% if message %}
+        <h2>Dynamic Question and Answer Viewer for [{{ message }}]</h2>
+    {% endif %}
+    
+    <!-- Textarea for displaying the question -->
+    <textarea id="question_box" rows="10" cols="120" readonly></textarea><br><br>
+    
+    <!-- Button to show the answer -->
+    <button onclick="showAnswer()">Show Answer</button>
+    
+    <!-- Div to display the answer -->
+    <div id="answer" style="margin-top: 20px; font-weight: bold; color: blue;"></div>
+    
+    <!-- Navigation buttons -->
+    <button onclick="prevQuestion()">Previous</button>
+    <button onclick="nextQuestion()">Next</button>
+    
+    <script>
+        let qaDict = {}; // Will hold the question-answer pairs
+        let questions = []; // Array of questions
+        let currentIndex = 0; // Index of the current question
+
+        // Fetch the question-answer dictionary from the backend
+        async function fetchQA() {
+            const response = await fetch('/get-qa');
+            qaDict = await response.json();
+            questions = Object.keys(qaDict);
+            loadQuestion();
+        }
+
+        // Load the current question into the textarea
+        function loadQuestion() {
+            const currentQuestion = questions[currentIndex];
+            document.getElementById('question_box').value = currentQuestion;
+            document.getElementById('answer').innerText = ""; // Clear the previous answer
+        }
+
+        // Show the answer to the current question
+        function showAnswer() {
+            const currentQuestion = questions[currentIndex];
+            const answer = qaDict[currentQuestion];
+            document.getElementById('answer').innerText = "Answer: " + answer;
+        }
+
+        // Navigate to the previous question
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadQuestion();
+            }
+        }
+
+        // Navigate to the next question
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                loadQuestion();
+            }
+        }
+
+        // Fetch questions and answers on page load
+        window.onload = fetchQA;
+    </script>
+</body>
+</html>
