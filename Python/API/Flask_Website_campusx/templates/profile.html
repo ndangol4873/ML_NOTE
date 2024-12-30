@@ -5,12 +5,21 @@
     <title>Profile</title>
 </head>
 <body>
+    <h1>Welcome to the Menu Page</Menu></h1>
+    <form action="/profile" method="post"></form>
+
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% endif %}
+
 
     <p>What would you like to do</p>
     <ul>
-        <li><a href="/ner">NER</a></li>
-        <li>Sentiment Analysis</li>
-        <li>Abuse Detection</li>
+        <li><a href="/category_selection">Interview Questions</a></li>
+        <li><a href="/calendar">Calendar</a></li>
+        <li>Funny Jokes</li>
+        <li>Inspiring Quotes</li>
+       
     </ul>
 
 </body>

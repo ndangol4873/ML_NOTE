@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request,redirect, session
 from db_json import Database
+from questions import QuestionAnswer
+import json
 
 
 dbo = Database()
@@ -65,7 +67,44 @@ def profile():
 ## Routing to register Page http://127.0.0.1:5000/ner
 @app.route('/ner')
 def ner():
-    return "Ner Hogaye"
+    return render_template ('/ner.html')
+
+## Routing to register Page http://127.0.0.1:5000/perform_ner
+@app.route('/perform_ner')
+def perform_ner():
+    pass
+
+
+@app.route('/category_selection')
+def category_selection():
+    return render_template ('category.html')
+
+## Routing to register Page http://127.0.0.1:5000/display_question 
+@app.route('/get_question_answer', methods=['post'])
+def get_question_answer():
+    category = request.form.get('category')
+    qa = QuestionAnswer()
+    qa_dict = qa.get_question_answer(category)
+    return qa_dict
+    # return render_template ('display.html', message = category)
+ 
+
+
+# ## Routing to register Page http://127.0.0.1:5000/display_question 
+# @app.route('/display_question', methods=['post'])
+# def display_question():
+#     category = request.form.get('category')
+#     qa = QuestionAnswer()
+#     # qa.get_question_answer(category)
+#     return qa.get_question_answer(category)
+    
+
+
+
+@app.route('/calendar')
+def calender():
+    return 'this is calendar page'
+
 
 if __name__=="__main__":
     app.run(debug=True)

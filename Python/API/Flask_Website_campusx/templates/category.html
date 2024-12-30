@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Questions Category Selection </title>
+</head>
+<body>
+    <h1>Interview Questions</h1>
+    <form id="questionForm" action="/get_question_answer" method="POST">
+        <label for="category">Select a category:</label>
+        <select id="category" name="category">
+            <option value="">--Select Category--</option>
+            <option value="python">Python</option>
+            <option value="machine_learning">Machine Learning</option>
+            <option value="deep_learning">Deep Learning</option>
+            <option value="mlops">MLOPS</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <div id="questions"></div>
+
+    <script>
+        document.getElementById("questionForm").addEventListener("submit", function(event) {
+            const category = document.getElementById("category").value;
+            if (category === "") {
+                alert("Please select a category.");
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
