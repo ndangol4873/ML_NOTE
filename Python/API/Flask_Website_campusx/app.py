@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,redirect, session
+from flask import Flask, jsonify, render_template, request,redirect, session
 from db_json import Database
 from questions import QuestionAnswer
 import json
@@ -79,25 +79,25 @@ def perform_ner():
 def category_selection():
     return render_template ('category.html')
 
+
+@app.route('/display') 
+def display():
+    return render_template('display.html' )
+    # return 'this is display'
+
 ## Routing to register Page http://127.0.0.1:5000/display_question 
 @app.route('/get_question_answer', methods=['post'])
 def get_question_answer():
     category = request.form.get('category')
     qa = QuestionAnswer()
     qa_dict = qa.get_question_answer(category)
-    return qa_dict
+
+    test = " "
+    for k, v in qa_dict.items():
+        test += f"{k} --> {v}<br/><br/>"
+    return test
     # return render_template ('display.html', message = category)
  
-
-
-# ## Routing to register Page http://127.0.0.1:5000/display_question 
-# @app.route('/display_question', methods=['post'])
-# def display_question():
-#     category = request.form.get('category')
-#     qa = QuestionAnswer()
-#     # qa.get_question_answer(category)
-#     return qa.get_question_answer(category)
-    
 
 
 

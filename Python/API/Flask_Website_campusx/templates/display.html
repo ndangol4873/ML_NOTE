@@ -18,8 +18,8 @@
     <div id="answer" style="margin-top: 20px; font-weight: bold; color: blue;"></div>
     
     <!-- Navigation buttons -->
-    <button onclick="prevQuestion()">Previous</button>
-    <button onclick="nextQuestion()">Next</button>
+    <button id="prevBtn" onclick="prevQuestion()" disabled>Previous</button>
+    <button id="nextBtn" onclick="nextQuestion()">Next</button>
     
     <script>
         let qaDict = {}; // Will hold the question-answer pairs
@@ -28,7 +28,7 @@
 
         // Fetch the question-answer dictionary from the backend
         async function fetchQA() {
-            const response = await fetch('/get-qa');
+            const response = await fetch('/get_question_answer');
             qaDict = await response.json();
             questions = Object.keys(qaDict);
             loadQuestion();
@@ -39,6 +39,10 @@
             const currentQuestion = questions[currentIndex];
             document.getElementById('question_box').value = currentQuestion;
             document.getElementById('answer').innerText = ""; // Clear the previous answer
+
+            // Handle navigation button states
+            document.getElementById('prevBtn').disabled = (currentIndex === 0);
+            document.getElementById('nextBtn').disabled = (currentIndex === questions.length - 1);
         }
 
         // Show the answer to the current question

@@ -19,5 +19,28 @@ class QuestionAnswer:
             category_key = self.cat_name_var(category)
             return response[category_key]
             
-            
+
+
+
+
+
+# from constant import question
+# import os 
+# import json 
+
+# category_var = {}
+# for key, value in question.items():
+#     category_var[key] = {}
+#     for k , v in value.items():
+#         for kk, vv in v.items():
+#             key_name = str(k)+'_'+kk
+#             category_var[key][key_name] = vv
+# category_var
+
+# file = 'questions.json'
+# if os.path.exists(file):
+#     os.remove(file)
+
+# with open(file,'w') as wf:
+#     json.dump(category_var, wf, indent=4)
 
