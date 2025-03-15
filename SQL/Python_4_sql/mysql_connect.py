@@ -166,8 +166,12 @@ class MySqlConnection:
 
     def connection_close(self):
         if self.conn:
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT DATE_FORMAT(NOW(), '%Y-%m-%d %r') AS CurrentDateTime;")
+            close_datetime = cursor.fetchone()[0]
             self.conn.close()
-            print('MySql Connection Closed.........\n')
+            print(f"MySql Connection Closed.........{close_datetime}\n")
+ 
  
         
 
