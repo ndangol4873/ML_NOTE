@@ -1,3 +1,4 @@
+
 import pandas as pd
 import mysql.connector
 import getpass,os
@@ -114,7 +115,19 @@ class MySqlConnection:
         except Exception as e:
             print(f"Error creating table: {e}")
 
-
+    def insert_record (self, insert_script, table_name):
+        """Inserts the records from Dataframe to the Table """
+        try:  
+            if self.conn is None or not self.conn.is_connected():
+                print("Reconnecting to MySQL...")
+                self.connect()
+            cursor = self.conn.cursor()
+            cursor.execute(insert_script)
+            self.conn.commit()
+            print("rows inserted successfully.")
+        except Exception as e:
+            print(f"Error inserting data: {e}")
+            self.conn.rollback()
 
 
     def insert_record_from_df (self, table_name, df):
